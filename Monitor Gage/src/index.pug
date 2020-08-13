@@ -1,0 +1,13 @@
+div.wrapper
+  div.rang
+    div.rang-title
+      input#show.rang-number(type="text" value="20%" disabled)
+
+    svg.meter
+      circle.meter-left(r="96" cx="135" cy="142")
+      circle.meter-center(r="96" cx="136" cy="142")
+      circle.meter-right(r="96" cx="138" cy="142")
+      polygon.meter-clock(points="129,145 137,90 145,145")
+      circle.meter-circle(r="10" cx="137" cy="145")
+    
+    input#range.rang-slider(type="range" min="0" max="100")
