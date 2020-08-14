@@ -51,7 +51,7 @@ setInterval(function() {
         console.log(response.percentage)
         var rotateClock = response.percentage;
         rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180) / 100)) + 'deg)';
-        rangeShow.value = rotateClock + '%';
+        rangeShow.value = Math.round(rotateClock * 5 ) + '%';
     });
 
 }, 100);
