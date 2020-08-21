@@ -43,15 +43,29 @@ setInterval(function() {
     // });
 
     var settings = {
-        "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/data/m2",
+        "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/data/m1",
         "method": "GET",
         "timeout": 0,
     };
     $.ajax(settings).done(function(response) {
         console.log(response.percentage)
-        var rotateClock = response.percentage;
-        rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180) / 100)) + 'deg)';
-        rangeShow.value = rotateClock + '%';
+        var rotateClock = (response.percentage * 2 )/20;
+        var temp = rotateClock * 100
+        if(temp > 100){
+            temp = 100;
+        }
+        rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180))) + 'deg)';
+        rangeShow.value = Math.round(temp ) + '%';
+
+        // console.log(response.reps);
+
+        // var reps = response.reps * 1;
+
+        
+        var test = 0;
+        for( var reps = 0; temp >= 80; reps++){
+            document.getElementById("reps").innerHTML = "Reps: " + reps;
+        }
     });
 
 }, 100);

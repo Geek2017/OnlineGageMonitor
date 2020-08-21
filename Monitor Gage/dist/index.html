@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="./style.css">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script>
+    //     if(sessionStorage.getItem('state') == 1){
+    //     //    console.log("You're in!")
+    //    } else {
+    //        window.location.href = './login.html';
+    //    }
+   </script>
 </head>
 
 <body>
@@ -23,6 +30,24 @@
       <polygon class="meter-clock" points="129,145 137,90 145,145"></polygon>
       <circle class="meter-circle" r="10" cx="137" cy="145"></circle>
     </svg>
+
+    <br><br><br>
+
+
+    <input type="radio" name="editList" id="E1" value="always" checked/>
+    <label for="always"> Exercise 1</label>
+    
+    <input type="radio" name="editList" id="E2" value="never"/>
+    <label for="never"> Exercise 2</label>
+    
+    <input type="radio" name="editList" id="E3" value="costChange"/>
+    <label for="change"> Exercise 3</label>
+
+    <input type="radio" name="editList" id="E4" value="costChange"/>
+    <label for="change"> Exercise 4</label>
+
+
+    <h1><p id="reps">Reps: 0</p></h1>
 
         </div>
     </div>

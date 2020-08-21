@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - SVG speedometer CSS slider (спидометр, ползунок)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="wrapper">
+        <div class="rang">
+            <br>
+            
+            <input type="text" id="user" /><br>
+    <input type="password" id="pwd" minlength="10" /><br>
+    <!-- <button id="encode">Enco</button> -->
+    <!-- <button id="decode">Deco</button> -->
+    <button id="login">Login</button>
+    <p id="output"></p>
+
+        </div>
+    </div>
+    <!-- partial -->
+    <script>
+        var encode = document.getElementById('encode'),
+            decode = document.getElementById('decode'),
+            login = document.getElementById('login'),
+            signIn = document.getElementById('user'),
+            pwd = document.getElementById('password');
+
+            login.onclick = function() {
+            ajaxsave()
+            }
+
+
+         function ajaxsave() {
+
+                const username = $('#user').val();
+
+                var settings = {
+                "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/data/" + username,
+                "method": "GET",
+                "timeout": 0,
+                };
+                $.ajax(settings).done(function (response) {
+                if(response.id){
+                // console.log(Base64.decode(response.password));
+                var lsrole = 0;
+                // var decodedPwd = Base64.decode(response.password);
+                var address = response.role;
+                var role = response.role;
+                var signInPwd = $('#passwordSignIn').val();
+                console.log(response.id);
+                sessionStorage.setItem("state", 1);
+                // sessionStorage.setItem("MacAddress", address);
+                window.location.href = './index.html';
+                // if (signInPwd == decodedPwd){
+                //     sessionStorage.setItem("state", 1);
+                //     sessionStorage.setItem("role", lsrole);
+                //     console.log("You're in!");
+                //     window.location.href = './index.html';
+
+                // } else {
+                //     document.getElementById("messages").innerHTML = "Your password is incorrect!";
+                // }
+                } 
+                // else if(response.username && response.password && !response.role){
+                //     document.getElementById("messages").innerHTML = "Kindly contact the administrator for your authorization";
+                // }else if(!response.username && !response.password && !response.role) {
+                //     document.getElementById("messages").innerHTML = "Your account is not registered";
+                //     }
+
+                });
+            }
+    </script>
+
+</body>
+
+</html>
