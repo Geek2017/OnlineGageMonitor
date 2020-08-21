@@ -56,20 +56,17 @@ setInterval(function() {
         }
         rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180))) + 'deg)';
         rangeShow.value = Math.round(temp ) + '%';
-
-       
         
 
-        
-        // var reps = 0;
-
-        if(temp >= 80){
+        if(temp >= 70 && temp <= 85 ){
+            
             var settings = {
                 "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/exercises/cj@verko.com",
                 "method": "GET",
                 "timeout": 0,
             };
             $.ajax(settings).done(function(response) {
+                temp = 0;
                 var reps = response.exercise1 * 1;
                 reps = reps + 1;
                 document.getElementById("reps").innerHTML = "Reps: " + reps;
@@ -112,4 +109,4 @@ setInterval(function() {
         }
     });
 
-}, 100);
+}, 800);
