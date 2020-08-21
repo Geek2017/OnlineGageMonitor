@@ -57,14 +57,58 @@ setInterval(function() {
         rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180))) + 'deg)';
         rangeShow.value = Math.round(temp ) + '%';
 
-        // console.log(response.reps);
-
-        // var reps = response.reps * 1;
+       
+        
 
         
-        var test = 0;
-        for( var reps = 0; temp >= 80; reps++){
-            document.getElementById("reps").innerHTML = "Reps: " + reps;
+        // var reps = 0;
+
+        if(temp >= 80){
+            var settings = {
+                "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/exercises/cj@verko.com",
+                "method": "GET",
+                "timeout": 0,
+            };
+            $.ajax(settings).done(function(response) {
+                var reps = response.exercise1 * 1;
+                reps = reps + 1;
+                document.getElementById("reps").innerHTML = "Reps: " + reps;
+                console.log(reps);
+
+                var myData = JSON.stringify({
+                    // "domain": "www.done.com"
+                    "email": "cj@verko.com",
+                    "exercise1": reps,
+                    "exercise2": 0,
+                    "exercise3": 0,
+                    "exercise4": 0
+                    // "password": Base64.encode(pwd.value),
+                    // "role": "ordinary"
+                });
+            
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    // url: "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/adcounts/{domain}",
+                    url: "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/exercises/{id}",
+                    data: myData,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data) {
+                        // console.log(data);
+            
+                    },
+                    error: function(error) {
+                        // console.log(error);
+                    }
+                });
+            });
+    
+            
+            
+
+            
         }
     });
 
