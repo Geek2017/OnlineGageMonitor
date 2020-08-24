@@ -11,24 +11,17 @@
 #include <ESP8266WiFiMulti.h>
 #include <HX711.h>
 #include <ESP8266HTTPClient.h>
-
+#include <WiFiManager.h>
 #include <WiFiClientSecureBearSSL.h>
 // Fingerprint for demo URL, expires on June 2, 2021, needs to be updated well before this date
 //const uint8_t fingerprint[20] = {0x40, 0xaf, 0x00, 0x6b, 0xec, 0x90, 0x22, 0x41, 0x8e, 0xa3, 0xad, 0xfa, 0x1a, 0xe8, 0x25, 0x41, 0x1d, 0x1a, 0x54, 0xb3};
 
-const int LOADCELL_DOUT_PIN = 12;
-const int LOADCELL_SCK_PIN = 14;
+const int LOADCELL_DOUT_PIN = 14;
+const int LOADCELL_SCK_PIN = 12;
 HX711 scale;
 
-float calibration_factor = 110000; // this calibration factor must be adjusted according to your load cell
+float calibration_factor = 100000; // this calibration factor must be adjusted according to your load cell
 float units;
-float x;
-float percentage;
-
-int cal(){
-  x = units/20;
-  percentage = x * 100;  
-  }
 
 ESP8266WiFiMulti WiFiMulti;
 
@@ -51,40 +44,63 @@ void setup() {
   }
 
   WiFi.mode(WIFI_STA);
-  WiFiMulti.addAP("HGU-MJM-NETWORK", "F@m1ly@43v3r");
+  //WiFiManager, Local intialization. Once its business is done, there is no need to keep it around
+  WiFiManager wm;
+
+  //reset settings - wipe credentials for testing
+  //wm.resetSettings();
+
+  bool res;
+  res = wm.autoConnect("AutoConnectAP");
+  //WiFiMulti.addAP("HGU-MJM-NETWORK", "F@m1ly@43v3r");
+
+  if (!res) {
+    Serial.println("Failed to connect");
+    // ESP.restart();
+  }
+  else {
+    //if you get here you have connected to the WiFi
+    Serial.println("connected...yeey :)");
+  }
 }
+
 
 void loop() {
   // wait for WiFi connection
-  if ((WiFiMulti.run() == WL_CONNECTED)) {
+  //if ((WiFiMulti.run() == WL_CONNECTED))
+  //if (res) {
 
-    std::unique_ptr<BearSSL::WiFiClientSecure>client(new BearSSL::WiFiClientSecure);
+  std::unique_ptr<BearSSL::WiFiClientSecure>client(new BearSSL::WiFiClientSecure);
 
-    //client->setFingerprint(fingerprint);
-    client->setInsecure();
+  //client->setFingerprint(fingerprint);
+  client->setInsecure();
 
-    HTTPClient https;
+  HTTPClient https;
 
-    Serial.print("[HTTPS] begin...\n");
-    if (https.begin(*client, "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/data/m2")) {  // HTTPS
+  Serial.print("[HTTPS] begin...\n");
+  if (https.begin(*client, "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/data/m1")) {  // HTTPS
 
-      Serial.print("[HTTPS] POST...\n");
-      // start connection and send HTTP header
+    Serial.print("[HTTPS] POST...\n");
+    // start connection and send HTTP header
+    for (int a = 1; a >= 1; a++) {
       units = scale.get_units(), 5;
       if (units < 0)
       {
-      units = 0.00;
+        units = 0.00;
       }
-      int result = 0;
-      result = cal();
+
+      String mac = WiFi.macAddress();
       DynamicJsonDocument doc(1024);
-    
-      doc["id"] = "m2";
+
+
+      doc["id"] = "m1";
       doc["email"]   = "cj@verko.com";
       doc["exercise"] = "0";
+      //doc["password"] = "pass";
       doc["percentage"] = units;
+      //doc["macaddress"] = mac;
       doc["reps"] = "0";
-    
+
       String json;
       serializeJson(doc, json);
       https.addHeader("Content-Type", "application/json");
@@ -102,12 +118,13 @@ void loop() {
       } else {
         Serial.printf("[HTTPS] POST... failed, error: %s\n", https.errorToString(httpCode).c_str());
       }
-
-      https.end();
-    } else {
-      Serial.printf("[HTTPS] Unable to connect\n");
     }
+
+    https.end();
+  } else {
+    Serial.printf("[HTTPS] Unable to connect\n");
   }
+
 
   Serial.println("Wait 10s before next round...");
   delay(100);
