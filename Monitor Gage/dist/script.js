@@ -4,9 +4,12 @@ var rangeMeter = document.querySelector('#range');
 var rangeShow = document.querySelector("#show");
 var rangeClock = document.querySelector('.meter-clock');
 var pdata = 0;
+var needToReload = false;
 
 
 setInterval(function() {
+
+   
 
 
     // if (pdata < 100) {
@@ -56,10 +59,9 @@ setInterval(function() {
         }
         rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180))) + 'deg)';
         rangeShow.value = Math.round(temp ) + '%';
-        
 
-        if(temp >= 70 && temp <= 85 ){
-            
+        if(temp >= 80 && needToReload == false){
+            // console.log("greater than 80 and false");
             var settings = {
                 "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/exercises/cj@verko.com",
                 "method": "GET",
@@ -101,11 +103,16 @@ setInterval(function() {
                     }
                 });
             });
-    
-            
-            
+            needToReload = true;
 
             
+        } else if (temp >= 80 & needToReload == true){
+            console.log("You need to reaload");
+        }
+        
+        if(temp <= 10){
+            needToReload = false;
+            console.log("Reloaded");
         }
     });
 
