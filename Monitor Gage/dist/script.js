@@ -60,7 +60,7 @@ setInterval(function() {
         rangeClock.style.transform = 'rotate(' + (-90 + ((rotateClock * 180))) + 'deg)';
         rangeShow.value = Math.round(temp ) + '%';
 
-        if(temp >= 80 && needToReload == false){
+        if(temp >= 50 && needToReload == false){
             // console.log("greater than 80 and false");
             var settings = {
                 "url": "https://pq38i6wtd4.execute-api.ap-southeast-1.amazonaws.com/verkoapi/exercises/cj@verko.com",
@@ -106,13 +106,13 @@ setInterval(function() {
             needToReload = true;
 
             
-        } else if (temp >= 80 & needToReload == true){
-            console.log("You need to reaload");
+        } else if (temp >= 50 & needToReload == true){
+            // console.log("You need to reaload");
         }
         
-        if(temp <= 10){
+        if(temp <= 50){
             needToReload = false;
-            console.log("Reloaded");
+            // console.log("Reloaded");
         }
     });
 
