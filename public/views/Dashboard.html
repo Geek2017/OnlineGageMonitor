@@ -1,0 +1,44 @@
+
+
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="wrapper">
+            <div class="rang">
+                <div class="rang-title">
+                    <input class="rang-number" id="show" type="text" value="0%" disabled="disabled" />
+                </div>
+                <svg class="meter">
+          <circle class="meter-left" r="96" cx="135" cy="142"></circle>
+          <circle class="meter-center" r="96" cx="136" cy="142"></circle>
+          <circle class="meter-right" r="96" cx="138" cy="142"></circle>
+          <polygon class="meter-clock" points="129,145 137,90 145,145"></polygon>
+          <circle class="meter-circle" r="10" cx="137" cy="145"></circle>
+        </svg>
+    
+        <br><br><br>
+    
+    
+        <input type="radio" name="editList" id="E1" value="always" checked/>
+        <label for="always"> Exercise 1</label>
+        
+        <input type="radio" name="editList" id="E2" value="never"/>
+        <label for="never"> Exercise 2</label>
+        
+        <input type="radio" name="editList" id="E3" value="costChange"/>
+        <label for="change"> Exercise 3</label>
+    
+    
+        <h1><p id="reps" style="font-size:150px;">Reps: 0</p></h1>
+    
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="./assets/libraries/plugins/chart.js/Chart.min.js"></script>
+<script src="./assets/libraries/dist/js/demo.js"></script>
+<script src="./assets/libraries/dist/js/pages/dashboard3.js"></script>
