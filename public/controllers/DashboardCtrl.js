@@ -18,18 +18,42 @@ angular.module('newApp').controller('DashboardCtrl', function($scope) {
     var email, password, macaddres, percentage;
 
     if(document.getElementById('E1').checked) { 
+        var settings = {
+            "url": "https://yl5whaa4v4.execute-api.ap-southeast-2.amazonaws.com/vts/exercises/" + mac,
+            "method": "GET",
+            "timeout": 0,
+        };
+        $.ajax(settings).done(function(response) {
+            document.getElementById("reps").innerHTML = "Reps: " + response.exercise1;
+        });
         //  console.log("Exercise1");
         E1 = true;
         E2 = false;
         E3 = false;
     } 
     else if(document.getElementById('E2').checked) { 
+        var settings = {
+            "url": "https://yl5whaa4v4.execute-api.ap-southeast-2.amazonaws.com/vts/exercises/" + mac,
+            "method": "GET",
+            "timeout": 0,
+        };
+        $.ajax(settings).done(function(response) {
+            document.getElementById("reps").innerHTML = "Reps: " + response.exercise2;
+        });
         // console.log("Exercise2");
         E1 = false;
         E2 = true;
         E3 = false;
     } 
     else if(document.getElementById('E3').checked) { 
+        var settings = {
+            "url": "https://yl5whaa4v4.execute-api.ap-southeast-2.amazonaws.com/vts/exercises/" + mac,
+            "method": "GET",
+            "timeout": 0,
+        };
+        $.ajax(settings).done(function(response) {
+            document.getElementById("reps").innerHTML = "Reps: " + response.exercise3;
+        });
         // console.log("Exercise3");
         E1 = false;
         E2 = false;
