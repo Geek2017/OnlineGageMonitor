@@ -335,7 +335,7 @@ angular.module('newApp').controller('DashboardCtrl', function($scope) {
 
     }
         
-        }, 800);
+        }, 500);
 
 
 
